@@ -11,7 +11,7 @@ export default function Navbar() {
   return (
     <header className="w-full bg-white shadow-sm sticky top-0 z-50">
       <nav
-        className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4"
+        className=" flex items-center justify-between px-6 py-4"
         aria-label="Main navigation"
       >
         {/* Logo */}
