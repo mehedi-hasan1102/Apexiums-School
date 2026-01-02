@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+
+.nav-link {
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  filter: brightness(0.9);
+}
+
+.mobile-link {
+  padding: 0.5rem 0;
+}
