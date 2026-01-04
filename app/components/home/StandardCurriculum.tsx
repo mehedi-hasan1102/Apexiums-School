@@ -22,7 +22,7 @@ const curriculumData: CurriculumItem[] = [
       'Nurture foundational skills and ignite curiosity through interactive learning designed for young minds.',
     bg: 'bg-cyan-100',
     readMoreColor: 'text-blue-600',
-    icon: '/icons/kinder.png',
+    icon: '/assets/kinder.png',
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const curriculumData: CurriculumItem[] = [
       'Build strong academic foundations with a balanced approach to creativity, critical thinking, and problem-solving.',
     bg: 'bg-amber-100',
     readMoreColor: 'text-green-600',
-    icon: '/icons/elementary.png',
+    icon: '/assets/elementary.png',
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ const curriculumData: CurriculumItem[] = [
       'Empower students with advanced knowledge and life skills, preparing them for future academic and personal success.',
     bg: 'bg-purple-100',
     readMoreColor: 'text-red-500',
-    icon: '/icons/middle.png',
+    icon: '/assets/middle.png',
   },
 ];
 
