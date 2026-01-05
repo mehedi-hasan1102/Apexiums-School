@@ -29,7 +29,7 @@ const stories: Story[] = [
     title: "Find out if a school fits the family’s needs",
     date: 'Dec 22, 2024',
     dateColor: 'bg-orange-300',
-    image: '/images/story-2.jpg',
+    image: '/assets/story-2.png'
   },
   {
     id: 3,
