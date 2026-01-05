@@ -50,7 +50,7 @@ const stories: Story[] = [
     title: 'Conversation rhymes improve kids listening',
     date: 'Jan 09, 2025',
     dateColor: 'bg-purple-400',
-    image: '/images/story-5.jpg',
+    image: '/assets/story-5.png',
   },
 ];
 
