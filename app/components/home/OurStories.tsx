@@ -43,7 +43,7 @@ const stories: Story[] = [
     title: 'Classroom management techniques for new tutors',
     date: 'Jan 06, 2025',
     dateColor: 'bg-green-400',
-    image: '/images/story-4.jpg',
+    image: '/assets/story-4.png',
   },
   {
     id: 5,
