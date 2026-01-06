@@ -1,7 +1,10 @@
 'use client';
 
+import { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 type Story = {
   id: number;
@@ -29,7 +32,7 @@ const stories: Story[] = [
     title: "Find out if a school fits the family’s needs",
     date: 'Dec 22, 2024',
     dateColor: 'bg-orange-300',
-    image: '/assets/story-2.png'
+    image: '/assets/story-2.png',
   },
   {
     id: 3,
@@ -55,22 +58,97 @@ const stories: Story[] = [
 ];
 
 export default function OurStories() {
-  const featured = stories.find(s => s.featured);
-  const rest = stories.filter(s => !s.featured);
+  const featured = stories.find((s) => s.featured);
+  const rest = stories.filter((s) => !s.featured);
+  const canvasRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    // Scene
+    const scene = new THREE.Scene();
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(
+      45,
+      canvasRef.current.clientWidth / canvasRef.current.clientHeight,
+      0.1,
+      1000
+    );
+    camera.position.z = 50;
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientHeight);
+    canvasRef.current.appendChild(renderer.domElement);
+
+    // Ambient Light
+    const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+    scene.add(ambient);
+
+    // Directional Light
+    const directional = new THREE.DirectionalLight(0xffffff, 0.5);
+    directional.position.set(10, 10, 10);
+    scene.add(directional);
+
+    // Controls (optional for slight 3D rotation)
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.enableRotate = false;
+
+    // Create card planes
+    const cards: THREE.Mesh[] = [];
+    const geometry = new THREE.PlaneGeometry(12, 8);
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+    // Just create invisible meshes for subtle parallax
+    for (let i = 0; i < stories.length; i++) {
+      const card = new THREE.Mesh(geometry, material.clone());
+      card.position.x = (i % 3) * 14 - 14; // simple grid layout
+      card.position.y = -Math.floor(i / 3) * 10;
+      scene.add(card);
+      cards.push(card);
+    }
+
+    // Animate function
+    const animate = () => {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    // Handle resize
+    const handleResize = () => {
+      if (!canvasRef.current) return;
+      camera.aspect = canvasRef.current.clientWidth / canvasRef.current.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientHeight);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      renderer.dispose();
+      scene.clear();
+    };
+  }, []);
 
   return (
-    <section className="bg-gradient-to-b from-[#fff7ef] to-[#ffe7c7] py-20">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
-        <h2 className="text-center text-3xl font-semibold mb-12">
-          Our Stories
-        </h2>
+    <section className="relative py-20">
+      {/* Three.js subtle canvas */}
+      <div
+        ref={canvasRef}
+        className="absolute inset-0 -z-10"
+        style={{ width: '100%', height: '100%' }}
+      />
 
-        {/* Layout */}
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <h2 className="text-center text-3xl font-semibold mb-12">Our Stories</h2>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Featured Card */}
           {featured && (
-            <div className="lg:col-span-2 bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div className="lg:col-span-2 bg-white rounded-2xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform">
               <div className="relative h-[320px]">
                 <Image
                   src={featured.image}
@@ -86,22 +164,17 @@ export default function OurStories() {
               </div>
 
               <div className="p-6">
-                <h3 className="text-2xl font-semibold mb-3">
-                  {featured.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {featured.description}
-                </p>
+                <h3 className="text-2xl font-semibold mb-3">{featured.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{featured.description}</p>
               </div>
             </div>
           )}
 
-          {/* Right Grid Cards */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
-            {rest.map(story => (
+            {rest.map((story) => (
               <div
                 key={story.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition"
+                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition hover:scale-[1.02]"
               >
                 <div className="relative h-40">
                   <Image
@@ -118,16 +191,13 @@ export default function OurStories() {
                 </div>
 
                 <div className="p-4">
-                  <h4 className="font-semibold text-sm leading-snug">
-                    {story.title}
-                  </h4>
+                  <h4 className="font-semibold text-sm leading-snug">{story.title}</h4>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Button */}
         <div className="mt-12 text-center">
           <Link
             href="/stories"
