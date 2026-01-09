@@ -1,5 +1,5 @@
 
-kid school
+kid school next js typescrift project
 
 ```bash
 npm run dev
