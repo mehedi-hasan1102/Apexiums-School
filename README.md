@@ -9,3 +9,5 @@ pnpm dev
 # or
 bun dev
 ```
+
+kids school
