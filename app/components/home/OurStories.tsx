@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import * as THREE from 'three';
+import gsap from 'gsap';
 
 type Story = {
   id: number;
@@ -59,107 +59,30 @@ const stories: Story[] = [
 export default function OurStories() {
   const featured = stories.find((s) => s.featured);
   const rest = stories.filter((s) => !s.featured);
-  const canvasRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!bgRef.current) return;
 
-    let renderer: THREE.WebGLRenderer;
-    let scene: THREE.Scene;
-    let camera: THREE.PerspectiveCamera;
-    let animationId: number;
-
-    const init = async () => {
-      const { OrbitControls } = await import(
-        'three/examples/jsm/controls/OrbitControls'
-      );
-
-      scene = new THREE.Scene();
-
-      camera = new THREE.PerspectiveCamera(
-        45,
-        canvasRef.current!.clientWidth / canvasRef.current!.clientHeight,
-        0.1,
-        1000
-      );
-      camera.position.z = 50;
-
-      renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
+    const ctx = gsap.context(() => {
+      gsap.to(bgRef.current, {
+        y: 30,
+        duration: 6,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
       });
+    });
 
-      renderer.setSize(
-        canvasRef.current!.clientWidth,
-        canvasRef.current!.clientHeight
-      );
-
-      canvasRef.current!.appendChild(renderer.domElement);
-
-      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-
-      const directional = new THREE.DirectionalLight(0xffffff, 0.5);
-      directional.position.set(10, 10, 10);
-      scene.add(directional);
-
-      const controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableZoom = false;
-      controls.enablePan = false;
-      controls.enableRotate = false;
-
-      const geometry = new THREE.PlaneGeometry(12, 8);
-      const material = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.05,
-      });
-
-      stories.forEach((_, i) => {
-        const card = new THREE.Mesh(geometry, material.clone());
-        card.position.x = (i % 3) * 14 - 14;
-        card.position.y = -Math.floor(i / 3) * 10;
-        scene.add(card);
-      });
-
-      const animate = () => {
-        animationId = requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-      };
-
-      animate();
-    };
-
-    init();
-
-    const handleResize = () => {
-      if (!canvasRef.current || !renderer || !camera) return;
-
-      camera.aspect =
-        canvasRef.current.clientWidth / canvasRef.current.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(
-        canvasRef.current.clientWidth,
-        canvasRef.current.clientHeight
-      );
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (animationId) cancelAnimationFrame(animationId);
-      renderer?.dispose();
-      scene?.clear();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section className="relative py-20">
-      {/* Three.js background */}
+    <section className="relative py-20 overflow-hidden">
+      {/* Animated background */}
       <div
-        ref={canvasRef}
-        className="absolute inset-0 -z-10"
-        style={{ width: '100%', height: '100%' }}
+        ref={bgRef}
+        className="absolute inset-0 -z-10 bg-gradient-to-br from-neutral-100 via-white to-neutral-200 opacity-60"
       />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
