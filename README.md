@@ -1,4 +1,4 @@
-
+Kids school ! it is  a hobby projects of mine !
 
 ```bash
 npm run dev
