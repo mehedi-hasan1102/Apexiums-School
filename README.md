@@ -1,4 +1,4 @@
-# Kids School - next js typescrift 
+# Kids School - next js  
 
 **⚠️ THIS PROJECT IS UNDER CONSTRUCTION ⚠️**
 
