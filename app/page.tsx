@@ -27,7 +27,7 @@ export default function Home() {
       <AnnouncementMarquee />
       <HeroSection />
 
-      <section className="page-wrap pb-10">
+      <section className="page-wrap pb-10 pt-10">
         <div className="surface-card grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-4">
           {KEY_STATS.map((stat) => (
             <article key={stat.label} className="rounded-xl bg-slate-50 p-4 text-center">

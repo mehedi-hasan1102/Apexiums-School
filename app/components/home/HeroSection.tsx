@@ -2,67 +2,70 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import Slider, { Settings } from 'react-slick';
-import { HERO_SLIDES } from '@/app/lib/school-data';
+import { ArrowRight, BellRing, Search } from 'lucide-react';
 
 export default function HeroSection() {
-  const settings: Settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    speed: 700,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    pauseOnHover: true,
-  };
-
   return (
-    <section className="page-wrap py-8">
-      <Slider {...settings} className="hero-slider">
-        {HERO_SLIDES.map((slide) => (
-          <article key={slide.id} className="px-1">
-            <div className="grid min-h-[460px] overflow-hidden rounded-3xl bg-white shadow-xl md:grid-cols-2">
-              <div
-                className={`relative flex flex-col justify-center gap-6 bg-gradient-to-br ${slide.theme} p-8 text-white sm:p-10`}
-              >
-                <span className="inline-flex w-fit rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]">
-                  {slide.subtitle}
-                </span>
+    <section className="w-full">
+      <div className="relative isolate min-h-[calc(100svh-110px)] w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/assets/Pasted image.png"
+            alt="Students in classroom"
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
+          />
+        </div>
 
-                <h1 className="max-w-xl text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
-                  {slide.title}
-                </h1>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-indigo-950/55 to-indigo-900/75" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(99,102,241,0.35),transparent_45%),radial-gradient(circle_at_85%_10%,rgba(14,165,233,0.25),transparent_38%)]" />
 
-                <p className="max-w-lg text-sm leading-relaxed text-white/90 sm:text-base">
-                  {slide.description}
-                </p>
+        <article className="relative z-10 mx-auto flex min-h-[calc(100svh-110px)] max-w-5xl flex-col items-center justify-center px-5 py-14 text-center text-white sm:px-8">
+          <div className="rounded-3xl bg-white/90 p-3 shadow-lg backdrop-blur">
+            <Image src="/assets/logo.png" alt="Apexiums School logo" width={118} height={118} />
+          </div>
 
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <Link href={slide.ctaHref} className="btn btn-secondary">
-                    {slide.ctaLabel}
-                  </Link>
-                  <Link href="/contact" className="btn btn-secondary">
-                    Talk to Office
-                  </Link>
-                </div>
-              </div>
+          <h1 className="mt-8 text-4xl font-extrabold leading-[1.1] text-white sm:text-5xl md:text-6xl">
+            Apexiums School
+            <span className="mt-2 block bg-gradient-to-r from-amber-300 via-orange-300 to-amber-400 bg-clip-text text-transparent">
+              Excellence in Education
+            </span>
+          </h1>
 
-              <div className="relative min-h-[280px] bg-neutral-100">
-                <Image
-                  src={slide.image}
-                  alt={slide.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                  priority={slide.id === 1}
-                />
-              </div>
-            </div>
-          </article>
-        ))}
-      </Slider>
+          <p className="mt-5 max-w-3xl text-lg font-medium text-white/90 sm:text-2xl">
+            These are not just years, this is the story of growth.
+          </p>
+          <p className="mt-2 max-w-2xl text-base text-white/85 sm:text-xl">A place where every young mind can thrive.</p>
+
+          <div className="mt-10 grid w-full max-w-4xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <Link
+              href="/admission"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-green-500 px-5 py-4 text-base font-bold text-white shadow-lg shadow-emerald-900/30 transition hover:scale-[1.02]"
+            >
+              Apply for Admission
+              <ArrowRight size={18} />
+            </Link>
+
+            <Link
+              href="/login"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-4 text-base font-bold text-white shadow-lg shadow-blue-900/30 transition hover:scale-[1.02]"
+            >
+              <Search size={18} />
+              Check Results
+            </Link>
+
+            <Link
+              href="/gallery"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-rose-500 px-5 py-4 text-base font-bold text-white shadow-lg shadow-orange-900/30 transition hover:scale-[1.02] sm:col-span-2 lg:col-span-1"
+            >
+              <BellRing size={18} />
+              Notice Board
+            </Link>
+          </div>
+        </article>
+      </div>
     </section>
   );
 }
