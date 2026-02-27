@@ -1,10 +1,9 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import Slider, { Settings } from 'react-slick';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import gsap from 'gsap';
 
 type CurriculumItem = {
   id: number;
@@ -17,7 +16,7 @@ type CurriculumItem = {
 
 function CurriculumCard({ item }: { item: CurriculumItem }) {
   return (
-    <article className="curriculum-card h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_12px_34px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
+    <article className="curriculum-card h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_12px_34px_rgba(15,23,42,0.08)]">
       <div className="mb-5 flex items-start justify-between gap-3">
         <p className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-700 ${item.bg}`}>
           Stage {item.id}
@@ -82,29 +81,6 @@ const curriculumData: CurriculumItem[] = [
 
 export default function StandardCurriculum() {
   const sliderRef = useRef<Slider | null>(null);
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.curriculum-heading', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-      });
-
-      gsap.from('.curriculum-card', {
-        y: 60,
-        opacity: 0,
-        duration: 0.9,
-        stagger: 0.15,
-        ease: 'power3.out',
-        delay: 0.2,
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   const settings: Settings = {
     dots: false,
@@ -117,7 +93,7 @@ export default function StandardCurriculum() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-20">
+    <section className="relative py-20">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-sky-50/80 via-white to-cyan-50/70" />
 
       <div className="page-wrap relative max-w-6xl">
