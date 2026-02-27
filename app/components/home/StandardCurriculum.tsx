@@ -15,6 +15,32 @@ type CurriculumItem = {
   icon: string;
 };
 
+function CurriculumCard({ item }: { item: CurriculumItem }) {
+  return (
+    <article className="curriculum-card h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_12px_34px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
+      <div className="mb-5 flex items-start justify-between gap-3">
+        <p className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-700 ${item.bg}`}>
+          Stage {item.id}
+        </p>
+        <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-2">
+          <Image src={item.icon} alt={item.title} fill sizes="56px" className="object-contain p-2" />
+        </div>
+      </div>
+
+      <h3 className="text-xl font-semibold leading-snug text-slate-900">
+        {item.title}
+        <span className="ml-2 text-base font-medium text-slate-500">{item.age}</span>
+      </h3>
+
+      <p className="mt-4 text-sm leading-relaxed text-slate-600">{item.description}</p>
+
+      <button type="button" className="btn btn-secondary mt-6">
+        Read More
+      </button>
+    </article>
+  );
+}
+
 const curriculumData: CurriculumItem[] = [
   {
     id: 1,
@@ -84,17 +110,14 @@ export default function StandardCurriculum() {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
     arrows: false,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } },
-    ],
+    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
   };
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden py-20">
+    <section ref={sectionRef} className="relative py-20">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-sky-50/80 via-white to-cyan-50/70" />
 
       <div className="page-wrap relative max-w-6xl">
@@ -107,7 +130,7 @@ export default function StandardCurriculum() {
             </p>
           </div>
 
-          <div className="hidden gap-3 sm:flex">
+          <div className="hidden gap-3 sm:flex lg:hidden">
             <button
               type="button"
               aria-label="Previous curriculum slide"
@@ -127,31 +150,19 @@ export default function StandardCurriculum() {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="mb-2 hidden gap-6 lg:grid lg:grid-cols-4">
+          {curriculumData.map((item) => (
+            <div key={item.id}>
+              <CurriculumCard item={item} />
+            </div>
+          ))}
+        </div>
+
+        <div className="relative lg:hidden curriculum-slider">
           <Slider ref={sliderRef} {...settings}>
             {curriculumData.map((item) => (
               <div key={item.id} className="px-3 pb-3">
-                <article className="curriculum-card h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_12px_34px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
-                  <div className="mb-5 flex items-start justify-between gap-3">
-                    <p className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-700 ${item.bg}`}>
-                      Stage {item.id}
-                    </p>
-                    <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-2">
-                      <Image src={item.icon} alt={item.title} fill sizes="56px" className="object-contain p-2" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-semibold leading-snug text-slate-900">
-                    {item.title}
-                    <span className="ml-2 text-base font-medium text-slate-500">{item.age}</span>
-                  </h3>
-
-                  <p className="mt-4 text-sm leading-relaxed text-slate-600">{item.description}</p>
-
-                  <button type="button" className="btn btn-secondary mt-6">
-                    Read More
-                  </button>
-                </article>
+                <CurriculumCard item={item} />
               </div>
             ))}
           </Slider>

@@ -201,3 +201,15 @@ body {
   color: #ffffff;
   opacity: 1;
 }
+
+.curriculum-slider .slick-list {
+  margin: 0 -0.75rem;
+}
+
+.curriculum-slider .slick-track {
+  display: flex;
+}
+
+.curriculum-slider .slick-slide > div {
+  height: 100%;
+}
