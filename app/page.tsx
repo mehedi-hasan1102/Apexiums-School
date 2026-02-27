@@ -13,21 +13,6 @@ const KEY_STATS = [
   { label: 'Board Success Rate', value: '98%' },
 ];
 
-const STUDENT_SUPPORT_HIGHLIGHTS = [
-  {
-    title: 'Enrollment Guidance',
-    detail: 'Step-by-step support during admission and placement.',
-  },
-  {
-    title: 'Family Orientation',
-    detail: 'Clear overview of school routines, rules, and communication.',
-  },
-  {
-    title: 'Transition Follow-up',
-    detail: 'Early teacher and mentor check-ins after joining.',
-  },
-];
-
 export const metadata: Metadata = {
   title: 'Apexiums School | Home',
   description:
@@ -93,16 +78,12 @@ export default function Home() {
             <p className="eyebrow">Admission Support</p>
             <h3 className="mt-2 text-xl font-bold">Guided start for every new student</h3>
             <p className="mt-3 text-sm leading-relaxed text-neutral-600">
-              Structured support from enrollment to classroom adjustment.
+              Structured support from enrollment to classroom adjustment, including enrollment guidance, family
+              orientation, and transition follow-up after joining.
             </p>
-            <ul className="mt-5 space-y-3">
-              {STUDENT_SUPPORT_HIGHLIGHTS.map((item) => (
-                <li key={item.title} className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
-                  <p className="text-sm font-semibold text-neutral-900">{item.title}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-neutral-600">{item.detail}</p>
-                </li>
-              ))}
-            </ul>
+            <Link href="/admission" className="btn btn-secondary mt-5">
+              Get Admission Support
+            </Link>
           </article>
         </div>
       </section>
