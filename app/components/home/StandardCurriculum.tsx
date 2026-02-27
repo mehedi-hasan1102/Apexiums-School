@@ -60,15 +60,13 @@ export default function StandardCurriculum() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title animation
-      gsap.from('.curriculum-title', {
+      gsap.from('.curriculum-heading', {
         y: 40,
         opacity: 0,
         duration: 0.8,
         ease: 'power3.out',
       });
 
-      // Cards stagger animation
       gsap.from('.curriculum-card', {
         y: 60,
         opacity: 0,
@@ -96,64 +94,84 @@ export default function StandardCurriculum() {
   };
 
   return (
-    <section ref={sectionRef} className="py-20">
-      <div className="page-wrap max-w-6xl">
-        {/* Section Title */}
-        <h2 className="curriculum-title text-3xl font-semibold text-center mb-14">
-          Standard Curriculum
-        </h2>
+    <section ref={sectionRef} className="relative overflow-hidden py-20">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-sky-50/80 via-white to-cyan-50/70" />
 
-        {/* Slider */}
-        <div className="relative">
-          <Slider ref={sliderRef} {...settings}>
-            {curriculumData.map((item) => (
-              <div key={item.id} className="px-3">
-                <div className={`curriculum-card ${item.bg} rounded-2xl border border-white/70 p-8 text-center shadow-sm`}>
-                  <div className="flex justify-center mb-6">
-                    <Image
-                      src={item.icon}
-                      alt={item.title}
-                      width={80}
-                      height={80}
-                    />
-                  </div>
+      <div className="page-wrap relative max-w-6xl">
+        <div className="curriculum-heading mb-10 flex flex-col gap-5 border-b border-slate-200 pb-8 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="eyebrow">Academic Pathway</p>
+            <h2 className="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Standard Curriculum</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+              A stage-by-stage learning journey designed to build confidence, core knowledge, and future readiness.
+            </p>
+          </div>
 
-                  <h3 className="text-xl font-semibold mb-1">
-                    {item.title}{' '}
-                    <span className="font-medium text-gray-700">
-                      {item.age}
-                    </span>
-                  </h3>
-
-                  <p className="text-sm text-gray-600 leading-relaxed mt-4 mb-6">
-                    {item.description}
-                  </p>
-
-                  <button type="button" className="btn btn-secondary">
-                    Read More
-                  </button>
-                </div>
-              </div>
-            ))}
-          </Slider>
-
-          {/* Navigation Buttons */}
-          <div className="flex justify-center gap-4 mt-12">
+          <div className="hidden gap-3 sm:flex">
             <button
               type="button"
               aria-label="Previous curriculum slide"
               onClick={() => sliderRef.current?.slickPrev()}
-              className="btn btn-secondary h-12 w-12 p-0"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={19} />
             </button>
             <button
               type="button"
               aria-label="Next curriculum slide"
               onClick={() => sliderRef.current?.slickNext()}
-              className="btn btn-secondary h-12 w-12 p-0"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
             >
-              <ArrowRight size={20} />
+              <ArrowRight size={19} />
+            </button>
+          </div>
+        </div>
+
+        <div className="relative">
+          <Slider ref={sliderRef} {...settings}>
+            {curriculumData.map((item) => (
+              <div key={item.id} className="px-3 pb-3">
+                <article className="curriculum-card h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_12px_34px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
+                  <div className="mb-5 flex items-start justify-between gap-3">
+                    <p className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-700 ${item.bg}`}>
+                      Stage {item.id}
+                    </p>
+                    <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-2">
+                      <Image src={item.icon} alt={item.title} fill sizes="56px" className="object-contain p-2" />
+                    </div>
+                  </div>
+
+                  <h3 className="text-xl font-semibold leading-snug text-slate-900">
+                    {item.title}
+                    <span className="ml-2 text-base font-medium text-slate-500">{item.age}</span>
+                  </h3>
+
+                  <p className="mt-4 text-sm leading-relaxed text-slate-600">{item.description}</p>
+
+                  <button type="button" className="btn btn-secondary mt-6">
+                    Read More
+                  </button>
+                </article>
+              </div>
+            ))}
+          </Slider>
+
+          <div className="mt-10 flex justify-center gap-4 sm:hidden">
+            <button
+              type="button"
+              aria-label="Previous curriculum slide"
+              onClick={() => sliderRef.current?.slickPrev()}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+            >
+              <ArrowLeft size={19} />
+            </button>
+            <button
+              type="button"
+              aria-label="Next curriculum slide"
+              onClick={() => sliderRef.current?.slickNext()}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+            >
+              <ArrowRight size={19} />
             </button>
           </div>
         </div>
