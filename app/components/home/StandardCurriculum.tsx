@@ -1,8 +1,3 @@
-'use client';
-
-import { useRef } from 'react';
-import Slider, { Settings } from 'react-slick';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 type CurriculumItem = {
@@ -80,22 +75,10 @@ const curriculumData: CurriculumItem[] = [
 ];
 
 export default function StandardCurriculum() {
-  const sliderRef = useRef<Slider | null>(null);
-
-  const settings: Settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    arrows: false,
-    responsive: [{ breakpoint: 640, settings: { slidesToShow: 1 } }],
-  };
-
   return (
     <section className="bg-slate-50 py-20">
       <div className="page-wrap max-w-6xl">
-        <div className="curriculum-heading mb-10 flex flex-col gap-5 border-b border-slate-200 pb-8 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+        <div className="curriculum-heading mb-10 border-b border-slate-200 pb-8 sm:mb-12">
           <div>
             <p className="eyebrow">Academic Pathway</p>
             <h2 className="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Standard Curriculum</h2>
@@ -103,62 +86,14 @@ export default function StandardCurriculum() {
               A stage-by-stage learning journey designed to build confidence, core knowledge, and future readiness.
             </p>
           </div>
-
-          <div className="hidden gap-3 sm:flex lg:hidden">
-            <button
-              type="button"
-              aria-label="Previous curriculum slide"
-              onClick={() => sliderRef.current?.slickPrev()}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
-            >
-              <ArrowLeft size={19} />
-            </button>
-            <button
-              type="button"
-              aria-label="Next curriculum slide"
-              onClick={() => sliderRef.current?.slickNext()}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
-            >
-              <ArrowRight size={19} />
-            </button>
-          </div>
         </div>
 
-        <div className="mb-2 hidden gap-6 lg:grid lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {curriculumData.map((item) => (
-            <div key={item.id}>
+            <div key={item.id} className="h-full">
               <CurriculumCard item={item} />
             </div>
           ))}
-        </div>
-
-        <div className="relative lg:hidden curriculum-slider">
-          <Slider ref={sliderRef} {...settings}>
-            {curriculumData.map((item) => (
-              <div key={item.id} className="px-3 pb-3">
-                <CurriculumCard item={item} />
-              </div>
-            ))}
-          </Slider>
-
-          <div className="mt-10 flex justify-center gap-4 sm:hidden">
-            <button
-              type="button"
-              aria-label="Previous curriculum slide"
-              onClick={() => sliderRef.current?.slickPrev()}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
-            >
-              <ArrowLeft size={19} />
-            </button>
-            <button
-              type="button"
-              aria-label="Next curriculum slide"
-              onClick={() => sliderRef.current?.slickNext()}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
-            >
-              <ArrowRight size={19} />
-            </button>
-          </div>
         </div>
       </div>
     </section>
